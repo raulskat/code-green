@@ -1,0 +1,137 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+/* Header Styling */
+header {
+    background-color: #4CAF50;
+    padding: 1rem;
+    display: flex;
+    justify-content: flex-end; /* Aligns the navigation to the right */
+    align-items: center;
+}
+
+.header-nav {
+    background-color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: fit-content;
+}
+
+.header-nav ul {
+    display: flex;
+    list-style-type: none;
+    gap: 1.5rem;
+}
+
+.header-nav ul li a {
+    color: #333;
+    text-decoration: none;
+    font-size: 1rem;
+    padding: 0.5rem 1rem;
+    border-radius: 15px;
+}
+
+.header-nav ul li a:hover {
+    background-color: #ddd;
+    transition: background-color 0.3s;
+}
+
+/* Main Section Styling */
+.main-section {
+    display: flex;
+    justify-content: space-between;
+    padding: 2rem;
+}
+
+.model-info {
+    flex: 1;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+/* First White Box: Logo with 50% Width */
+.model-name-box {
+    background-color: white;
+    padding: 3rem;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #ccc;
+}
+
+.model-name-box .logo {
+    width: 50%; /* Logo size reduced to 50% of the box width */
+    height: auto;
+}
+
+.model-name-box .logo img {
+    width: 100%;
+    height: auto;
+    object-fit: contain; /* Ensures the logo fits inside the box without being cropped */
+}
+
+/* Second White Box: About the Model */
+.about-box {
+    background-color: white;
+    padding: 1.5rem;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    text-align: center;
+}
+
+/* Reduced Image Size */
+.model-image {
+    flex: 1;
+}
+
+.model-image img {
+    width: 80%; /* Reduced image size */
+    height: auto;
+    border-radius: 10px;
+    display: block;
+    margin: 0 auto; /* Center the image */
+}
+
+/* Get Started Section */
+.get-started {
+    text-align: center;
+    margin: 0.5rem 0; /* Move the button further upwards */
+}
+
+.get-started button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 20px 40px; /* Increase button size (200% of original size) */
+    font-size: 1.5rem; /* Scale up text size */
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.get-started button:hover {
+    background-color: #45a049; /* Slight hover effect */
+}
+
+/* Footer Styling */
+footer {
+    background-color: #4CAF50;
+    padding: 1rem;
+    text-align: center;
+    color: white;
+}
+
+.footer-content p {
+    margin: 0;
+}

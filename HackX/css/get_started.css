@@ -1,0 +1,115 @@
+/* Make sure the page takes full height and footer stays at the bottom */
+html, body {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Align the menu to the right and place it in one white box */
+.header-nav {
+    display: flex;
+    justify-content: flex-end; /* Align menu to the right */
+    padding: 1rem;
+}
+
+.menu-container {
+    background-color: white; /* White box background */
+    padding: 0.5rem 1rem; /* Padding around the menu */
+    border-radius: 30px; /* Rounded corners */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Add shadow for better look */
+}
+
+.menu-container ul {
+    display: flex;
+    list-style-type: none;
+    gap: 1.5rem;
+    margin: 0;
+}
+
+.menu-container ul li a {
+    color: #333;
+    text-decoration: none;
+    font-size: 1rem;
+    padding: 0.5rem 1rem;
+    border-radius: 15px;
+}
+
+.menu-container ul li a:hover {
+    background-color: #ddd;
+    transition: background-color 0.3s;
+}
+
+/* Page Title Styling */
+.page-title {
+    text-align: center;
+    padding: 1.5rem 0;
+}
+
+.page-title h1 {
+    font-size: 2rem;
+    color: #4CAF50;
+    margin: 0;
+}
+
+/* Main Content Area */
+.main-content {
+    display: flex;
+    justify-content: space-between;
+    padding: 2rem;
+    gap: 2rem;
+    flex: 1; /* Make the content take the remaining space */
+}
+
+/* Textareas for Code, Question, and Solution */
+textarea {
+    width: 100%;
+    padding: 1rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: white; /* Make textarea white */
+    resize: none;
+    outline: none;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add a light shadow */
+}
+
+.left-section,
+.right-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+/* Style the buttons */
+.action-buttons {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.submit-btn, .upload-btn {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1rem;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.submit-btn:hover, .upload-btn:hover {
+    background-color: #45a049; /* Slight hover effect */
+}
+
+/* Footer should stick to the bottom */
+footer {
+    background-color: #4CAF50;
+    padding: 1rem;
+    text-align: center;
+    color: white;
+    flex-shrink: 0; /* Ensure footer stays at the bottom */
+}

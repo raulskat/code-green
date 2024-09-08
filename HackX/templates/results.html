@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Results</title>
+    <!-- Use Flask url_for to properly link the static CSS files -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/common.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/results.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- Include Chart.js -->
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <nav class="header-nav">
+            <ul>
+                <li><a href="{{ url_for('index') }}">Home</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Team</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Results Section -->
+    <section class="results-section">
+        <h2>Results</h2>
+        <div class="results-container">
+            <!-- Left List -->
+            <div class="result-list left-list">
+                <div class="result-item" id="vm-result">
+                    <span class="status-icon">{{ '✔' if exact_match else '✖' }}</span> VM
+                </div>
+                <div class="result-item" id="clipboard-result">
+                    <span class="status-icon">{{ '✔' if variable_renaming else '✖' }}</span> Clipboard
+                </div>
+                <div class="result-item" id="typing-result">
+                    <span class="status-icon">{{ '✔' if structural_similarity else '✖' }}</span> Fast Typing
+                </div>
+            </div>
+
+            <!-- Pie Chart -->
+            <div class="pie-chart">
+                <canvas id="pieChart"></canvas>
+            </div>
+
+            <!-- Right List -->
+            <div class="result-list right-list">
+                <div class="result-item" id="variable-result">
+                    <span class="status-icon">{{ '✔' if variable_renaming else '✖' }}</span> Variable
+                </div>
+                <div class="result-item" id="exact-code-result">
+                    <span class="status-icon">{{ '✔' if exact_match else '✖' }}</span> Exact Code
+                </div>
+                <div class="result-item" id="structural-result">
+                    <span class="status-icon">{{ '✔' if structural_similarity else '✖' }}</span> Structural
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Feedback Section -->
+    <section class="feedback-section">
+        <textarea id="feedback-text" placeholder="Feedback">{{ feedback }}</textarea>
+    </section>
+
+    <!-- Footer Section -->
+    <footer>
+        <div class="footer-content">
+            <button>Follow Us</button>
+        </div>
+    </footer>
+
+    <script>
+        // Dynamic Data for Status (Boolean Values)
+        const results = {
+            vm: {{ 'true' if exact_match else 'false' }},
+            clipboard: {{ 'true' if variable_renaming else 'false' }},
+            fastTyping: {{ 'true' if structural_similarity else 'false' }},
+            variable: {{ 'true' if variable_renaming else 'false' }},
+            exactCode: {{ 'true' if exact_match else 'false' }},
+            structural: {{ 'true' if structural_similarity else 'false' }}
+        };
+
+        // Function to update icons based on boolean values
+        function updateStatusIcons() {
+            document.getElementById("vm-result").querySelector(".status-icon").textContent = results.vm ? "✔" : "✖";
+            document.getElementById("vm-result").querySelector(".status-icon").style.color = results.vm ? "green" : "red";
+
+            document.getElementById("clipboard-result").querySelector(".status-icon").textContent = results.clipboard ? "✔" : "✖";
+            document.getElementById("clipboard-result").querySelector(".status-icon").style.color = results.clipboard ? "green" : "red";
+
+            document.getElementById("typing-result").querySelector(".status-icon").textContent = results.fastTyping ? "✔" : "✖";
+            document.getElementById("typing-result").querySelector(".status-icon").style.color = results.fastTyping ? "green" : "red";
+
+            document.getElementById("variable-result").querySelector(".status-icon").textContent = results.variable ? "✔" : "✖";
+            document.getElementById("variable-result").querySelector(".status-icon").style.color = results.variable ? "green" : "red";
+
+            document.getElementById("exact-code-result").querySelector(".status-icon").textContent = results.exactCode ? "✔" : "✖";
+            document.getElementById("exact-code-result").querySelector(".status-icon").style.color = results.exactCode ? "green" : "red";
+
+            document.getElementById("structural-result").querySelector(".status-icon").textContent = results.structural ? "✔" : "✖";
+            document.getElementById("structural-result").querySelector(".status-icon").style.color = results.structural ? "green" : "red";
+        }
+
+        // Call the function to update icons
+        updateStatusIcons();
+
+        // Pie Chart Data
+        const chartData = {
+            labels: ["Plagiarism", "Original"],
+            datasets: [{
+                data: [{{ 100 - similarity_score }}, {{ similarity_score }}], // This is the dynamic data
+                backgroundColor: ["#ff6384", "#4CAF50"]
+            }]
+        };
+
+        // Render the pie chart using Chart.js
+        const ctx = document.getElementById("pieChart").getContext("2d");
+        const pieChart = new Chart(ctx, {
+            type: 'pie',
+            data: chartData,
+            options: {
+                responsive: true,
+                maintainAspectRatio: false
+            }
+        });
+
+        // Dynamic Feedback String
+        const feedbackMessage = "{{ feedback }}";
+
+        // Function to update feedback textarea
+        function updateFeedback(feedback) {
+            document.getElementById("feedback-text").value = feedback;
+        }
+
+        // Call the function to update feedback
+        updateFeedback(feedbackMessage);
+
+    </script>
+</body>
+</html>

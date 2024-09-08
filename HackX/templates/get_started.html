@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Get Started</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/common.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/get_started.css') }}">
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <nav class="header-nav">
+            <ul>
+                <li><a href="{{ url_for('index') }}">Home</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Team</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Page Title -->
+    <section class="page-title">
+        <h1>Get Started</h1>
+    </section>
+
+    <!-- Main Section -->
+    <section class="main-content">
+        <form action="{{ url_for('get_started') }}" method="POST">
+            <div class="left-section">
+                <!-- Code Area -->
+                <textarea name="code" placeholder="Code Area" rows="10"></textarea>
+                <!-- Submit and Upload Buttons -->
+                <div class="action-buttons">
+                    <button type="submit" class="submit-btn">Submit</button>
+                    <button type="button" class="upload-btn">Upload file</button>
+                </div>
+            </div>
+
+            <div class="right-section">
+                <!-- Question and Original Solution Text Areas -->
+                <textarea name="question" placeholder="Question" rows="6"></textarea>
+                <textarea name="original_code" placeholder="Original Solution" rows="6"></textarea>
+            </div>
+        </form>
+    </section>
+
+    <!-- Footer Section -->
+    <footer>
+        <div class="footer-content">
+            <button>Follow Us</button>
+        </div>
+    </footer>
+</body>
+</html>
