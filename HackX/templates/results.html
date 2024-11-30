@@ -109,7 +109,7 @@
         const chartData = {
             labels: ["Plagiarism", "Original"],
             datasets: [{
-                data: [{{ 100 - similarity_score }}, {{ similarity_score }}], // This is the dynamic data
+                data: [{{ similarity_score }}, {{100 -  similarity_score }}], // This is the dynamic data
                 backgroundColor: ["#ff6384", "#4CAF50"]
             }]
         };

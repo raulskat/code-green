@@ -85,3 +85,28 @@ def plagiarism_detection(original_code, test_code):
     print(structural_similarity)
     # Return the boolean results directly
     return exact_match, variable_renaming, structural_similarity
+
+
+# def main():
+#     # Sample original and test code for plagiarism detection
+#     original_code = """
+#     def do(a, b):
+#         return a + b
+#     """
+
+#     test_code = """
+#     def sum(x, y):
+#         return x + y
+#     """
+
+#     # Perform plagiarism detection
+#     exact_match, variable_renaming, structural_similarity = plagiarism_detection(original_code, test_code)
+
+#     # Output the results
+#     print("Exact match:", exact_match)
+#     print("Variable renaming detected:", variable_renaming)
+#     print("Structural similarity detected:", structural_similarity)
+
+
+# if __name__ == "__main__":
+#     main()
