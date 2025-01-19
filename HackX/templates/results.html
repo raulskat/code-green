@@ -60,7 +60,8 @@
 
     <!-- Feedback Section -->
     <section class="feedback-section">
-        <textarea id="feedback-text" placeholder="Feedback">{{ feedback }}</textarea>
+        <textarea id="feedback-text" placeholder="Feedback">Click the button to generate feedback...</textarea>
+        <button id="generate-feedback-button">Generate Feedback</button>
     </section>
 
     <!-- Footer Section -->
@@ -83,23 +84,56 @@
 
         // Function to update icons based on boolean values
         function updateStatusIcons() {
-            document.getElementById("vm-result").querySelector(".status-icon").textContent = results.vm ? "✔" : "✖";
-            document.getElementById("vm-result").querySelector(".status-icon").style.color = results.vm ? "green" : "red";
+            console.log("Updating status icons with results:", results);
 
-            document.getElementById("clipboard-result").querySelector(".status-icon").textContent = results.clipboard ? "✔" : "✖";
-            document.getElementById("clipboard-result").querySelector(".status-icon").style.color = results.clipboard ? "green" : "red";
+            const vmResult = document.getElementById("vm-result");
+            const clipboardResult = document.getElementById("clipboard-result");
+            const typingResult = document.getElementById("typing-result");
+            const variableResult = document.getElementById("variable-result");
+            const exactCodeResult = document.getElementById("exact-code-result");
+            const structuralResult = document.getElementById("structural-result");
 
-            document.getElementById("typing-result").querySelector(".status-icon").textContent = results.fastTyping ? "✔" : "✖";
-            document.getElementById("typing-result").querySelector(".status-icon").style.color = results.fastTyping ? "green" : "red";
+            if (vmResult) {
+                vmResult.querySelector(".status-icon").textContent = results.vm ? "✔" : "✖";
+                vmResult.querySelector(".status-icon").style.color = results.vm ? "green" : "red";
+            } else {
+                console.error("Element with ID 'vm-result' not found");
+            }
 
-            document.getElementById("variable-result").querySelector(".status-icon").textContent = results.variable ? "✔" : "✖";
-            document.getElementById("variable-result").querySelector(".status-icon").style.color = results.variable ? "green" : "red";
+            if (clipboardResult) {
+                clipboardResult.querySelector(".status-icon").textContent = results.clipboard ? "✔" : "✖";
+                clipboardResult.querySelector(".status-icon").style.color = results.clipboard ? "green" : "red";
+            } else {
+                console.error("Element with ID 'clipboard-result' not found");
+            }
 
-            document.getElementById("exact-code-result").querySelector(".status-icon").textContent = results.exactCode ? "✔" : "✖";
-            document.getElementById("exact-code-result").querySelector(".status-icon").style.color = results.exactCode ? "green" : "red";
+            if (typingResult) {
+                typingResult.querySelector(".status-icon").textContent = results.fastTyping ? "✔" : "✖";
+                typingResult.querySelector(".status-icon").style.color = results.fastTyping ? "green" : "red";
+            } else {
+                console.error("Element with ID 'typing-result' not found");
+            }
 
-            document.getElementById("structural-result").querySelector(".status-icon").textContent = results.structural ? "✔" : "✖";
-            document.getElementById("structural-result").querySelector(".status-icon").style.color = results.structural ? "green" : "red";
+            if (variableResult) {
+                variableResult.querySelector(".status-icon").textContent = results.variable ? "✔" : "✖";
+                variableResult.querySelector(".status-icon").style.color = results.variable ? "green" : "red";
+            } else {
+                console.error("Element with ID 'variable-result' not found");
+            }
+
+            if (exactCodeResult) {
+                exactCodeResult.querySelector(".status-icon").textContent = results.exactCode ? "✔" : "✖";
+                exactCodeResult.querySelector(".status-icon").style.color = results.exactCode ? "green" : "red";
+            } else {
+                console.error("Element with ID 'exact-code-result' not found");
+            }
+
+            if (structuralResult) {
+                structuralResult.querySelector(".status-icon").textContent = results.structural ? "✔" : "✖";
+                structuralResult.querySelector(".status-icon").style.color = results.structural ? "green" : "red";
+            } else {
+                console.error("Element with ID 'structural-result' not found");
+            }
         }
 
         // Call the function to update icons
@@ -109,32 +143,55 @@
         const chartData = {
             labels: ["Plagiarism", "Original"],
             datasets: [{
-                data: [{{ similarity_score }}, {{100 -  similarity_score }}], // This is the dynamic data
+                data: [{{ similarity_score }}, {{ 100 - similarity_score }}], // This is the dynamic data
                 backgroundColor: ["#ff6384", "#4CAF50"]
             }]
         };
 
         // Render the pie chart using Chart.js
         const ctx = document.getElementById("pieChart").getContext("2d");
-        const pieChart = new Chart(ctx, {
-            type: 'pie',
-            data: chartData,
-            options: {
-                responsive: true,
-                maintainAspectRatio: false
-            }
-        });
-
-        // Dynamic Feedback String
-        const feedbackMessage = "{{ feedback }}";
-
-        // Function to update feedback textarea
-        function updateFeedback(feedback) {
-            document.getElementById("feedback-text").value = feedback;
+        if (ctx) {
+            new Chart(ctx, {
+                type: 'pie',
+                data: chartData,
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false
+                }
+            });
+        } else {
+            console.error("Pie chart element not found");
         }
 
-        // Call the function to update feedback
-        updateFeedback(feedbackMessage);
+        // Function to fetch feedback asynchronously
+        function fetchFeedback() {
+            const submittedCode = {{ submitted_code | tojson | safe }};
+            const originalCode = {{ original_code | tojson | safe }};
+
+            fetch("{{ url_for('generate_feedback_route') }}", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    submitted_code: submittedCode,
+                    original_code: originalCode
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                const feedbackText = document.getElementById("feedback-text");
+                if (feedbackText) {
+                    feedbackText.value = data.feedback;
+                } else {
+                    console.error("Element with ID 'feedback-text' not found");
+                }
+            })
+            .catch(error => console.error("Error fetching feedback:", error));
+        }
+
+        // Add event listener to the button to fetch feedback
+        document.getElementById("generate-feedback-button").addEventListener("click", fetchFeedback);
 
     </script>
 </body>

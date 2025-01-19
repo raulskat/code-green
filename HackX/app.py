@@ -1,6 +1,7 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, jsonify
 from rule_model import plagiarism_detection
 from ai_model import calculate_similarity, generate_feedback
+import urllib.parse
 
 app = Flask(__name__)
 
@@ -33,8 +34,9 @@ def get_started():
                                 similarity_score=similarity_score, 
                                 exact_match=exact_match, 
                                 variable_renaming=variable_renaming,
-                                # feedback=feedback,
-                                structural_similarity=structural_similarity, 
+                                structural_similarity=structural_similarity,
+                                submitted_code=urllib.parse.quote(submitted_code),
+                                original_code=urllib.parse.quote(original_code)
                                 
                                 ))
 
@@ -47,22 +49,31 @@ def results():
     
     
     exact_match = request.args.get('exact_match', 'False') == 'True'
-    print(f"exact_match: {exact_match}")  # Debug print
+    # print(f"exact_match: {exact_match}")  # Debug print
     variable_renaming = request.args.get('variable_renaming', 'False') == 'True'
     structural_similarity = request.args.get('structural_similarity', 'False') == 'True'
+    submitted_code = urllib.parse.unquote(request.args.get('submitted_code', ''))
+    original_code = urllib.parse.unquote(request.args.get('original_code', ''))
 
-    feedback = request.args.get('feedback','')
-    print(f"feedback: {feedback}")
 
     # Step 7: Pass the data to the results page
     return render_template('results.html', 
                            similarity_score=similarity_score,
                            exact_match=exact_match,
                            variable_renaming=variable_renaming,
-                           feedback=feedback,
                            structural_similarity=structural_similarity,
+                           feedback="",
+                           submitted_code=submitted_code,
+                           original_code=original_code
                            
                         )
+@app.route('/generate_feedback', methods=['POST'])
+def generate_feedback_route():
+    data = request.get_json()
+    submitted_code = data['submitted_code']
+    original_code = data['original_code']
+    feedback = generate_feedback(submitted_code, original_code)
+    return jsonify({'feedback': feedback})
 
 if __name__ == '__main__':
     app.run(debug=True)

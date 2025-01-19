@@ -13,7 +13,7 @@ This project implements an **Advanced Plagiarism Detection System** designed for
 - **Rule-Based Detection**:
   - Detects **exact matches**, **variable renaming**, and **structural changes** in the submitted code.
 - **AI-Driven Detection**:
-  - Computes **semantic similarities** between user submissions and existing solutions using AI models (e.g., OpenAI Codex).
+  - Computes **semantic similarities** between user submissions and existing solutions using AI models (e.g., Cohere).
   - Provides **feedback** on plagiarism and code improvements.
 - **Cheating Detection**:
   - Monitors typing speed and clipboard activity.
@@ -23,9 +23,8 @@ This project implements an **Advanced Plagiarism Detection System** designed for
 ## Technology Stack
 
 - **Backend**: Python, Flask
-- **AI Models**: OpenAI API (Codex)
+- **AI Models**: Cohere
 - **Frontend**: HTML, CSS, JavaScript, Chart.js (for visualizations)
-- **Caching**: Redis (optional for optimization)
   
 ---
 
@@ -35,15 +34,14 @@ This project implements an **Advanced Plagiarism Detection System** designed for
 
 - Python 3.x
 - Flask
-- OpenAI API Key
-- Optional: Redis (for caching)
+- Cohere API Key
   
 ### Install Dependencies
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your-repo/plagiarism-detection-system.git
-   cd plagiarism-detection-system
+   git clone https://github.com/raulskat/code-green.git
+   cd code-green/HackX
    ```
 
 2. Install the required Python libraries:
@@ -51,10 +49,10 @@ This project implements an **Advanced Plagiarism Detection System** designed for
    pip install -r requirements.txt
    ```
 
-3. Set up your **OpenAI API Key**:
+3. Set up your **Cohere API Key**:
    - Create an `.env` file in the root directory or export your API key as an environment variable:
      ```bash
-     export OPENAI_API_KEY='your-openai-api-key'
+     export OPENAI_API_KEY='your-cohere-api-key'
      ```
 
 ### Run the Application
@@ -170,10 +168,3 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 - [Rahul Shekhawat]
 - [Satvik Verma]
 - [Tushar Singhal]
-```
-
-### Notes:
-- Update the **API key** setup section and **Contributors** section with relevant details.
-- Include links to GitHub or other project hosting services if applicable.
-
-This README should provide a comprehensive guide to your project's structure, usage, and workflow. Let me know if you need any adjustments!
