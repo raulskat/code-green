@@ -1,17 +1,17 @@
 import os
-import openai
-import openai.error
+# import openai
+# import openai.error
 import difflib
-from dotenv import load_dotenv
-from flask import Flask, request, jsonify
+# from dotenv import load_dotenv
+from flask import Flask #, request, jsonify
 
 # Loading the API key from the .env file
-load_dotenv()
+# load_dotenv()
 
 app = Flask(__name__)
 
 # Setting OpenAI API key here 
-openai.api_key = os.getenv("OPENAI_API_KEY")
+# openai.api_key = os.getenv("OPENAI_API_KEY")
 def calculate_similarity(text1, text2, scale=100):
     """
     Calculates the similarity between two texts using difflib.
@@ -43,18 +43,18 @@ def generate_feedback(submitted_answer, ai_generated_solution):
         )}
     ]
 
-    try:
-        response = openai.ChatCompletion.create(
-            model="gpt-3.5-turbo",
-            messages=messages,
-            max_tokens=250,
-            temperature=0.7
-        )
-        feedback = response['choices'][0]['message']['content'].strip()
-        return feedback
-    except openai.error.OpenAIError as e:
-        # This will handle any OpenAI-related errors (rate limit, invalid key, etc.)
-        feedback = f"Error generating feedback: {str(e)}"
+    # try:
+    #     response = openai.ChatCompletion.create(
+    #         model="gpt-3.5-turbo",
+    #         messages=messages,
+    #         max_tokens=250,
+    #         temperature=0.7
+    #     )
+    #     feedback = response['choices'][0]['message']['content'].strip()
+    #     return feedback
+    # except openai.error.OpenAIError as e:
+    #     # This will handle any OpenAI-related errors (rate limit, invalid key, etc.)
+    #     feedback = f"Error generating feedback: {str(e)}"
 
 @app.route('/api/plagiarism_check', methods=['POST'])
 def plagiarism_check():
@@ -71,45 +71,45 @@ def plagiarism_check():
         similarity_with_original = calculate_similarity(original_solution, submitted_answer)
 
         # Step 2: Generate AI solution based on the question
-        try:
-            ai_response = openai.ChatCompletion.create(
-                model="gpt-3.5-turbo",
-                messages=[
-                    {"role": "system", "content": "You are an expert coder who generates solutions to programming problems."},
-                    {"role": "user", "content": f"Generate a solution for the following problem:\n\n{question}"}
-                ],
-                max_tokens=250,
-                temperature=0.7
-            )
-            ai_generated_solution = ai_response['choices'][0]['message']['content'].strip()
-        except openai.error.OpenAIError as e:
-            return jsonify({"error": f"Error generating AI solution: {str(e)}"}), 500
+        # try:
+        #     ai_response = openai.ChatCompletion.create(
+        #         model="gpt-3.5-turbo",
+        #         messages=[
+        #             {"role": "system", "content": "You are an expert coder who generates solutions to programming problems."},
+        #             {"role": "user", "content": f"Generate a solution for the following problem:\n\n{question}"}
+        #         ],
+        #         max_tokens=250,
+        #         temperature=0.7
+        #     )
+        #     ai_generated_solution = ai_response['choices'][0]['message']['content'].strip()
+        # except openai.error.OpenAIError as e:
+        #     return jsonify({"error": f"Error generating AI solution: {str(e)}"}), 500
 
         # Step 3: Calculate similarity with AI-generated solution
-        similarity_with_ai = calculate_similarity(submitted_answer, ai_generated_solution, scale=50)
+        # similarity_with_ai = calculate_similarity(submitted_answer, ai_generated_solution, scale=50)
 
         # Step 4: Determine the threshold
         threshold = determine_threshold(original_solution)
 
         # Step 5: Calculate the final score
-        final_result = similarity_with_original + similarity_with_ai
+        # final_result = similarity_with_original + similarity_with_ai
 
-        # Step 6: Generate feedback if plagiarism detected
-        feedback = generate_feedback(submitted_answer, ai_generated_solution) if final_result >= threshold else "No plagiarism detected."
+        # # Step 6: Generate feedback if plagiarism detected
+        # feedback = generate_feedback(submitted_answer, ai_generated_solution) if final_result >= threshold else "No plagiarism detected."
 
         # Return the response
-        return jsonify({
-            "question": question,
-            "submitted_answer": submitted_answer,
-            "original_solution": original_solution,
-            "ai_generated_solution": ai_generated_solution,
-            "similarity_with_original": similarity_with_original,
-            "similarity_with_ai": similarity_with_ai,
-            "threshold": threshold,
-            "final_result": final_result,
-            "feedback": feedback,
-            "result": "Plagiarized" if final_result >= threshold else "Not Plagiarized"
-        }), 200
+        # return jsonify({
+        #     "question": question,
+        #     "submitted_answer": submitted_answer,
+        #     "original_solution": original_solution,
+        #     "ai_generated_solution": ai_generated_solution,
+        #     "similarity_with_original": similarity_with_original,
+        #     "similarity_with_ai": similarity_with_ai,
+        #     "threshold": threshold,
+        #     "final_result": final_result,
+        #     "feedback": feedback,
+        #     "result": "Plagiarized" if final_result >= threshold else "Not Plagiarized"
+        # }), 200
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500

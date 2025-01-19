@@ -25,15 +25,15 @@ def get_started():
         similarity_score = calculate_similarity(original_code, submitted_code)
         
         # Step 4: Generate feedback
-        feedback = generate_feedback(submitted_code, original_code)
-        print(f"feedback from gner: {feedback}")
+        # feedback = generate_feedback(submitted_code, original_code)
+        # print(f"feedback from gner: {feedback}")
 
         # Step 5: Redirect to the results page with the computed values
         return redirect(url_for('results', 
                                 similarity_score=similarity_score, 
                                 exact_match=exact_match, 
                                 variable_renaming=variable_renaming,
-                                feedback=feedback,
+                                # feedback=feedback,
                                 structural_similarity=structural_similarity, 
                                 
                                 ))
