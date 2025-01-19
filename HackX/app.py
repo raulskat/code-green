@@ -15,8 +15,6 @@ def get_started():
         # Step 1: Get the form data from the user
         submitted_code = request.form['code']
         original_code = request.form['original_code']
-        print(f"submitted_code: {submitted_code}")
-        print(f"original_code: {original_code}")
         question = request.form['question']
         
         # Step 2: Pass the data to rule_model for boolean values
@@ -24,12 +22,8 @@ def get_started():
         
         # Step 3: Pass the data to ai_model for similarity score
         similarity_score = calculate_similarity(original_code, submitted_code)
-        
-        # Step 4: Generate feedback
-        # feedback = generate_feedback(submitted_code, original_code)
-        # print(f"feedback from gner: {feedback}")
 
-        # Step 5: Redirect to the results page with the computed values
+        # Step 4: Redirect to the results page with the computed values
         return redirect(url_for('results', 
                                 similarity_score=similarity_score, 
                                 exact_match=exact_match, 
@@ -49,7 +43,6 @@ def results():
     
     
     exact_match = request.args.get('exact_match', 'False') == 'True'
-    # print(f"exact_match: {exact_match}")  # Debug print
     variable_renaming = request.args.get('variable_renaming', 'False') == 'True'
     structural_similarity = request.args.get('structural_similarity', 'False') == 'True'
     submitted_code = urllib.parse.unquote(request.args.get('submitted_code', ''))
