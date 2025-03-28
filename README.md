@@ -125,7 +125,6 @@ This guide explains how to build, run, and share the Docker image for the Advanc
 - Docker installed on your system ([Get Docker](https://www.docker.com/get-started))
 - (Optional) A Docker Hub account if you plan to push and share your image
 
----
 
 ## Building the Docker Image
 
@@ -134,22 +133,11 @@ This guide explains how to build, run, and share the Docker image for the Advanc
 
    ```bash
    docker build -t hackx-flask .
+   docker run -p 5000:5000 hackx-flask
+   ```
 
----
-## Using the Docker Image
 
-This guide explains how to use the pre-built Docker image for the Advanced Plagiarism Detection System. Follow these steps to pull and run the image on your local machine.
 
----
-
-## Prerequisites
-
-- Docker must be installed on your system.  
-  [Download Docker](https://www.docker.com/get-started)
-
-- An active internet connection to pull the image from Docker Hub.
-
----
 
 ## Use our docker image
 you must have docker installed in macOS/Windows
