@@ -114,9 +114,56 @@ This project implements an **Advanced Plagiarism Detection System** designed for
      - **Feedback** for improving the code.
 
 ---
+# Docker Deployment Instructions
+
+This guide explains how to build, run, and share the Docker image for the Advanced Plagiarism Detection System.
+
+---
+
+## Prerequisites
+
+- Docker installed on your system ([Get Docker](https://www.docker.com/get-started))
+- (Optional) A Docker Hub account if you plan to push and share your image
+
+---
+
+## Building the Docker Image
+
+1. Open a terminal in your project root directory (where the `Dockerfile` is located).
+2. Run the command below to build your Docker image (it will be tagged as `hackx-flask`):
+
+   ```bash
+   docker build -t hackx-flask .
+
+---
+## Using the Docker Image
+
+This guide explains how to use the pre-built Docker image for the Advanced Plagiarism Detection System. Follow these steps to pull and run the image on your local machine.
+
+---
+
+## Prerequisites
+
+- Docker must be installed on your system.  
+  [Download Docker](https://www.docker.com/get-started)
+
+- An active internet connection to pull the image from Docker Hub.
+
+---
+
+## Use our docker image
+you must have docker installed in macOS/Windows
+
+```bash
+docker pull raulskat/hackx-flask:latest
+docker tag raulskat/hackx-flask:latest testflask
+docker run -p 5000:5000 testflask
+
+
+```
+---
 
 ## Usage
-
 1. Navigate to the **Get Started** page.
 2. Enter the **code**, **question**, and **original solution** in their respective fields.
 3. Submit the form. The results will be displayed on the **Results** page.
