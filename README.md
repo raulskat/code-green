@@ -43,7 +43,7 @@ For contributor notes, setup instructions, and a list of ongoing tasks, see [WOR
 1. Clone the repository:
    ```bash
    git clone https://github.com/raulskat/code-green.git
-   cd code-green/HackX
+   cd code-green
    ```
 
 2. Install the required Python libraries:
@@ -61,6 +61,7 @@ For contributor notes, setup instructions, and a list of ongoing tasks, see [WOR
 
 1. Start the Flask application:
    ```bash
+   cd HackX
    python app.py
    ```
 
