@@ -36,7 +36,7 @@ For contributor notes, setup instructions, and a list of ongoing tasks, see [WOR
 
 - Python 3.x
 - Flask
-- Cohere API Key
+- Cohere API Key (`COHERE_API_KEY` environment variable)
   
 ### Install Dependencies
 
@@ -52,10 +52,16 @@ For contributor notes, setup instructions, and a list of ongoing tasks, see [WOR
    ```
 
 3. Set up your **Cohere API Key**:
-   - Create an `.env` file in the root directory or export your API key as an environment variable:
+   - Export your API key as an environment variable (you can also create a local `.env` file for development):
      ```bash
-     export OPENAI_API_KEY='your-cohere-api-key'
+     export COHERE_API_KEY='your-cohere-api-key'
      ```
+
+### Environment Variables
+
+The application expects the following variables:
+
+- `COHERE_API_KEY` – API key for Cohere services.
 
 ### Run the Application
 
@@ -136,7 +142,7 @@ This guide explains how to build, run, and share the Docker image for the Advanc
 
    ```bash
    docker build -t hackx-flask .
-   docker run -p 5000:5000 hackx-flask
+   docker run -p 5000:5000 -e COHERE_API_KEY=your-cohere-api-key hackx-flask
    ```
 
 
@@ -148,7 +154,7 @@ you must have docker installed in macOS/Windows
 ```bash
 docker pull raulskat/hackx-flask:latest
 docker tag raulskat/hackx-flask:latest testflask
-docker run -p 5000:5000 testflask
+docker run -p 5000:5000 -e COHERE_API_KEY=your-cohere-api-key testflask
 
 
 ```
