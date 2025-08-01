@@ -2,8 +2,10 @@ from flask import Flask, render_template, request, redirect, url_for, jsonify
 from rule_model import plagiarism_detection
 from ai_model import calculate_similarity, generate_feedback
 from api import api_bp
+from flask_wtf import CSRFProtect
 import urllib.parse
 import logging
+import os
 
 logging.basicConfig(
     level=logging.INFO,
@@ -13,7 +15,10 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 app = Flask(__name__)
+app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'dev-secret-key')
+csrf = CSRFProtect(app)
 app.register_blueprint(api_bp)
+csrf.exempt(api_bp)
 
 @app.route('/')
 def index():

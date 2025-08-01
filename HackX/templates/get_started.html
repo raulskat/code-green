@@ -27,6 +27,7 @@
     <!-- Main Section -->
     <section class="main-content">
         <form action="{{ url_for('get_started') }}" method="POST">
+            {{ csrf_token() }}
             <div class="left-section">
                 <!-- Code Area -->
                 <textarea name="code" placeholder="Code Area" rows="10"></textarea>
