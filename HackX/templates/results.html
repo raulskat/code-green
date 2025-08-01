@@ -3,196 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Results</title>
-    <!-- Use Flask url_for to properly link the static CSS files -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/common.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/results.css') }}">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- Include Chart.js -->
+    <title>HackX - Results</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        window.resultsData = {
+            similarity_score: {{ similarity_score }},
+            exact_match: {{ 'true' if exact_match else 'false' }},
+            variable_renaming: {{ 'true' if variable_renaming else 'false' }},
+            structural_similarity: {{ 'true' if structural_similarity else 'false' }},
+            submitted_code: {{ submitted_code | tojson | safe }},
+            original_code: {{ original_code | tojson | safe }}
+        };
+    </script>
 </head>
 <body>
-    <!-- Header Section -->
-    <header>
-        <nav class="header-nav">
-            <ul>
-                <li><a href="{{ url_for('index') }}">Home</a></li>
-                <li><a href="#">About</a></li>
-                <li><a href="#">Team</a></li>
-            </ul>
-        </nav>
-    </header>
+    <div id="root"></div>
 
-    <!-- Results Section -->
-    <section class="results-section">
-        <h2>Results</h2>
-        <div class="results-container">
-            <!-- Left List -->
-            <div class="result-list left-list">
-                <div class="result-item" id="vm-result">
-                    <span class="status-icon">{{ '✔' if exact_match else '✖' }}</span> VM
-                </div>
-                <div class="result-item" id="clipboard-result">
-                    <span class="status-icon">{{ '✔' if variable_renaming else '✖' }}</span> Clipboard
-                </div>
-                <div class="result-item" id="typing-result">
-                    <span class="status-icon">{{ '✔' if structural_similarity else '✖' }}</span> Fast Typing
-                </div>
-            </div>
-
-            <!-- Pie Chart -->
-            <div class="pie-chart">
-                <canvas id="pieChart"></canvas>
-            </div>
-
-            <!-- Right List -->
-            <div class="result-list right-list">
-                <div class="result-item" id="variable-result">
-                    <span class="status-icon">{{ '✔' if variable_renaming else '✖' }}</span> Variable
-                </div>
-                <div class="result-item" id="exact-code-result">
-                    <span class="status-icon">{{ '✔' if exact_match else '✖' }}</span> Exact Code
-                </div>
-                <div class="result-item" id="structural-result">
-                    <span class="status-icon">{{ '✔' if structural_similarity else '✖' }}</span> Structural
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Feedback Section -->
-    <section class="feedback-section">
-        <textarea id="feedback-text" placeholder="Feedback">Click the button to generate feedback...</textarea>
-        <button id="generate-feedback-button">Generate Feedback</button>
-    </section>
-
-    <!-- Footer Section -->
-    <footer>
-        <div class="footer-content">
-            <button>Follow Us</button>
-        </div>
-    </footer>
-
-    <script>
-        // Dynamic Data for Status (Boolean Values)
-        const results = {
-            vm: {{ 'true' if exact_match else 'false' }},
-            clipboard: {{ 'true' if variable_renaming else 'false' }},
-            fastTyping: {{ 'true' if structural_similarity else 'false' }},
-            variable: {{ 'true' if variable_renaming else 'false' }},
-            exactCode: {{ 'true' if exact_match else 'false' }},
-            structural: {{ 'true' if structural_similarity else 'false' }}
-        };
-
-        // Function to update icons based on boolean values
-        function updateStatusIcons() {
-            console.log("Updating status icons with results:", results);
-
-            const vmResult = document.getElementById("vm-result");
-            const clipboardResult = document.getElementById("clipboard-result");
-            const typingResult = document.getElementById("typing-result");
-            const variableResult = document.getElementById("variable-result");
-            const exactCodeResult = document.getElementById("exact-code-result");
-            const structuralResult = document.getElementById("structural-result");
-
-            if (vmResult) {
-                vmResult.querySelector(".status-icon").textContent = results.vm ? "✔" : "✖";
-                vmResult.querySelector(".status-icon").style.color = results.vm ? "green" : "red";
-            } else {
-                console.error("Element with ID 'vm-result' not found");
-            }
-
-            if (clipboardResult) {
-                clipboardResult.querySelector(".status-icon").textContent = results.clipboard ? "✔" : "✖";
-                clipboardResult.querySelector(".status-icon").style.color = results.clipboard ? "green" : "red";
-            } else {
-                console.error("Element with ID 'clipboard-result' not found");
-            }
-
-            if (typingResult) {
-                typingResult.querySelector(".status-icon").textContent = results.fastTyping ? "✔" : "✖";
-                typingResult.querySelector(".status-icon").style.color = results.fastTyping ? "green" : "red";
-            } else {
-                console.error("Element with ID 'typing-result' not found");
-            }
-
-            if (variableResult) {
-                variableResult.querySelector(".status-icon").textContent = results.variable ? "✔" : "✖";
-                variableResult.querySelector(".status-icon").style.color = results.variable ? "green" : "red";
-            } else {
-                console.error("Element with ID 'variable-result' not found");
-            }
-
-            if (exactCodeResult) {
-                exactCodeResult.querySelector(".status-icon").textContent = results.exactCode ? "✔" : "✖";
-                exactCodeResult.querySelector(".status-icon").style.color = results.exactCode ? "green" : "red";
-            } else {
-                console.error("Element with ID 'exact-code-result' not found");
-            }
-
-            if (structuralResult) {
-                structuralResult.querySelector(".status-icon").textContent = results.structural ? "✔" : "✖";
-                structuralResult.querySelector(".status-icon").style.color = results.structural ? "green" : "red";
-            } else {
-                console.error("Element with ID 'structural-result' not found");
-            }
-        }
-
-        // Call the function to update icons
-        updateStatusIcons();
-
-        // Pie Chart Data
-        const chartData = {
-            labels: ["Plagiarism", "Original"],
-            datasets: [{
-                data: [{{ similarity_score }}, {{ 100 - similarity_score }}], // This is the dynamic data
-                backgroundColor: ["#ff6384", "#4CAF50"]
-            }]
-        };
-
-        // Render the pie chart using Chart.js
-        const ctx = document.getElementById("pieChart").getContext("2d");
-        if (ctx) {
-            new Chart(ctx, {
-                type: 'pie',
-                data: chartData,
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false
-                }
-            });
-        } else {
-            console.error("Pie chart element not found");
-        }
-
-        // Function to fetch feedback asynchronously
-        function fetchFeedback() {
-            const submittedCode = {{ submitted_code | tojson | safe }};
-            const originalCode = {{ original_code | tojson | safe }};
-
-            fetch("{{ url_for('generate_feedback_route') }}", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    submitted_code: submittedCode,
-                    original_code: originalCode
-                })
-            })
-            .then(response => response.json())
-            .then(data => {
-                const feedbackText = document.getElementById("feedback-text");
-                if (feedbackText) {
-                    feedbackText.value = data.feedback;
-                } else {
-                    console.error("Element with ID 'feedback-text' not found");
-                }
-            })
-            .catch(error => console.error("Error fetching feedback:", error));
-        }
-
-        // Add event listener to the button to fetch feedback
-        document.getElementById("generate-feedback-button").addEventListener("click", fetchFeedback);
-
-    </script>
+    <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <script type="text/babel" src="{{ url_for('static', filename='js/results.js') }}"></script>
 </body>
 </html>
