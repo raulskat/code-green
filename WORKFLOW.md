@@ -24,8 +24,17 @@ pytest
 
 # Change Log
 
-- _Add entries here describing major updates or decisions._
+- Consolidated duplicate requirements files into a single `requirements.txt`.
+- Updated Dockerfile to rely on runtime environment variables.
+- Refactored `ai_model.py` and registered an API blueprint in `api.py`.
+- Added logging to `app.py` and `rule_model.py`.
+- Implemented API key validation for Cohere in `ai_model.py`.
+- Added CSRF protection using Flask-WTF.
+- Introduced a pytest suite for the rule-based plagiarism checks.
 
 # Future Tasks
 
-- _Add ideas or improvements to be addressed in the future._
+- Expand test coverage to the AI module and API endpoints.
+- Add caching with Redis to improve performance.
+- Implement real-time monitoring of user typing and clipboard activity.
+- Document deployment steps using Docker and CI services.
