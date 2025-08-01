@@ -26,7 +26,7 @@ For contributor notes, setup instructions, and a list of ongoing tasks, see [WOR
 
 - **Backend**: Python, Flask
 - **AI Models**: Cohere
-- **Frontend**: HTML, CSS, JavaScript, Chart.js (for visualizations)
+ - **Frontend**: React with Bootstrap and Chart.js for visualizations
   
 ---
 
@@ -90,6 +90,7 @@ The application expects the following variables:
 │
 ├── static/                
 │   ├── css/               # Contains CSS files
+│   ├── js/                # React components
 │   └── images/            # Image assets for the project
 │
 └── templates/
