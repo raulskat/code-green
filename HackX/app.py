@@ -1,9 +1,11 @@
 from flask import Flask, render_template, request, redirect, url_for, jsonify
 from rule_model import plagiarism_detection
 from ai_model import calculate_similarity, generate_feedback
+from api import api_bp
 import urllib.parse
 
 app = Flask(__name__)
+app.register_blueprint(api_bp)
 
 @app.route('/')
 def index():
