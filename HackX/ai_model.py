@@ -7,6 +7,13 @@ from sklearn.metrics.pairwise import cosine_similarity
 # Loading the API key from the .env file
 load_dotenv()
 cohere_api_key = os.getenv("COHERE_API_KEY")
+
+if not cohere_api_key:
+    raise EnvironmentError(
+        "COHERE_API_KEY environment variable is missing or empty. "
+        "Please set your Cohere API key."
+    )
+
 co = cohere.Client(cohere_api_key)
 
 def calculate_similarity(text1, text2, scale=100):
