@@ -1,5 +1,8 @@
 import re
 from difflib import SequenceMatcher
+import logging
+
+logger = logging.getLogger(__name__)
 
 def preprocess_code(code):
     # Remove comments and unnecessary spaces
@@ -76,13 +79,13 @@ def detect_structural_similarity(original_code, test_code):
 def plagiarism_detection(original_code, test_code):
     # Step 1: Check for exact match first
     exact_match = detect_exact_match(original_code, test_code)
-    print(exact_match)
+    logger.info("Exact match detected: %s", exact_match)
     # Step 2: Check for variable renaming if it's not an exact match
     variable_renaming = detect_variable_renaming(original_code, test_code) if not exact_match else False
-    print(variable_renaming)
+    logger.info("Variable renaming detected: %s", variable_renaming)
     # Step 3: Check for structural similarity
     structural_similarity = detect_structural_similarity(original_code, test_code)
-    print(structural_similarity)
+    logger.info("Structural similarity detected: %s", structural_similarity)
     # Return the boolean results directly
     return exact_match, variable_renaming, structural_similarity
 
