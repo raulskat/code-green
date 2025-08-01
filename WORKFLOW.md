@@ -8,6 +8,14 @@ pip install -r requirements.txt
 python app.py
 ```
 
+# Continuous Integration
+
+Run the automated test suite with:
+
+```bash
+pytest
+```
+
 # Directory Overview
 
 - **HackX/templates/** – HTML templates for the Flask views.
