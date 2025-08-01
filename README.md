@@ -5,6 +5,8 @@
 ## Project Overview
 
 This project implements an **Advanced Plagiarism Detection System** designed for EdTech platforms and recruitment processes. It detects various forms of plagiarism, including **exact code matches**, **variable renaming**, and **structural changes**. Additionally, the system leverages AI models to compute **semantic similarities** and provides feedback on how to improve submitted code. It also includes features to monitor for **real-time cheating**, such as abnormal typing speed or copy-pasting code.
+For contributor notes, setup instructions, and a list of ongoing tasks, see [WORKFLOW.md](WORKFLOW.md).
+
 
 ---
 
