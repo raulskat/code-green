@@ -10,7 +10,6 @@ RUN pip install --no-cache-dir -r /app/requirements.txt
 COPY HackX/app.py /app/
 COPY HackX/rule_model.py /app/
 COPY HackX/ai_model.py /app/
-COPY HackX/.env /app/
 
 # Copy static and templates folders
 COPY HackX/static /app/static
